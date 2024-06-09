@@ -6,7 +6,10 @@
 # @File    : src/lstm_model/__init__.py
 # @Software: VSCode
 
-__all__ = []
+from lstm_model.lstm_module import LstmModule
+from lstm_model.pl_lstm import LitAutoLstm
+
+__all__ = ["LstmModule", "LitAutoLstm"]
 
 __author__ = "Zengxian Wang <zengxian822.wang@gmail.com>"
 __version__ = "0.1"

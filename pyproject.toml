@@ -5,6 +5,13 @@ description = "Add your description here"
 dependencies = [
     "torch==2.3.1+cu121",
     "numpy>=1.26.4",
+    "tqdm>=4.66.4",
+    "baostock>=0.8.9",
+    "efinance>=0.5.2",
+    "scikit-learn>=1.5.0",
+    "lightning[extra]>=2.2.5",
+    "wandb>=0.17.1",
+    "tensorboard>=2.17.0",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
@@ -19,7 +26,9 @@ build-backend = "hatchling.build"
 
 [tool.rye]
 managed = true
-dev-dependencies = []
+dev-dependencies = [
+    "torchvision==0.18.1+cu121",
+]
 
 [tool.hatch.metadata]
 allow-direct-references = true

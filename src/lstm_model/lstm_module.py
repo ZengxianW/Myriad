@@ -3,16 +3,17 @@
 # @Time    : 2024/6/9 2:23
 # @Author  : Zengxian Wang
 # @Email   : zengxian822.wang@gmail.com
-# @File    : src/lstm_model/lstm_model.py
+# @File    : src/lstm_model/lstm_module.py
 # @Software: VSCode
 
 
 import torch.nn as nn
+
 from torch import Tensor
 from typing import Tuple, Optional
 
 
-class LstmNet(nn.Module):
+class LstmModule(nn.Module):
     r"""使用人工智能库 PyTorch 构造的长短时记忆（LSTM）网络模型
 
     """
@@ -36,7 +37,7 @@ class LstmNet(nn.Module):
             _batch_first: 如果是 `True`，则输入和输出的 Tensor 将会以 `(batch, seq, feature)`
                 的形式提供，而非 `(seq, batch, feature)` 形式
         """
-        super(LstmNet, self).__init__()
+        super(LstmModule, self).__init__()
         self.__lstm = nn.LSTM(input_size=_input_size, hidden_size=_hidden_size,
                               num_layers=_num_layers, batch_first=_batch_first, dropout=_dropout)
         self.__linear = nn.Linear(in_features=_hidden_size, out_features=_output_size)
@@ -55,19 +56,21 @@ class LstmNet(nn.Module):
                 `c0` 是在第一个时间步之前传递给 LSTM 的细胞状态。 Default: None
 
         Returns:
-            linear_out: 经过神经网络 `LSTM` 之后再经过一个线性变换 `Linear` 的输出
-            hx: 隐藏层数据，以 (`hn`, `cn`) 的状态输出，`hn` 是最后一个时间步的隐藏状态，
-                形状与 `h0` 相同。 `cn` 是最后一个时间步的细胞状态，形状与 `c0` 相同。
+            linear_out: 经过神经网络 `LSTM` 之后再经过一个线性变换 `Linear` 的输出。
+            hx: 隐藏层数据，以 (`hn`, `cn`) 的状态输出，`hn` 是最后一个时间步的隐藏状态，形状与 `h0`
+            相同。 `cn` 是最后一个时间步的细胞状态，形状与 `c0` 相同。
         """
         lstm_out, hx = self.__lstm(x, hx)
         linear_out = self.__linear(lstm_out)
         return linear_out, hx
 
 
+# 测试这个文件中的模块是否能够运行
 if __name__ == '__main__':
+    # 测试 LstmNet 类
     import torch
 
-    rnn = LstmNet(10, 20, 2,2)
+    rnn = LstmModule(10, 20, 2, 2)
     inp = torch.randn(5, 3, 10)
     h0 = torch.randn(2, 5, 20)
     c0 = torch.randn(2, 5, 20)
