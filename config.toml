@@ -1,0 +1,35 @@
+[parameters]
+# 随机数种子，固定随机数种子保证每次深度学习模型训练和预测结果一致
+seed = 1
+# 训练数据占总体数据比例，测试数据就是 `1 - train_data_rate`
+train_data_rate = 0.95
+# 验证数据占训练数据比例，验证集在训练过程使用，用于验证该机器学习算法稳定性和可靠性
+valid_data_rate = 0.15
+# 描述这个模型想要预测未来 `predict_day` 天的数据
+predict_day = 1
+# 设置用前 `time_step` 天的数据来预测，也是 LSTM 使用的 time step 数，一定要保证训练数据量大于它
+time_step = 50
+# 测试情况，在测试数据中，使用 `debug_num` 条数据进行检验测试
+debug_num = 500
+# 优化器（optimizer）的学习率
+learning_rate = 1e-4
+# 深度学习模型训练的 batch size
+batch_size = 128
+# LSTM 的隐藏层大小，也是其输出大小
+hidden_size = 128
+# LSTM 的堆叠层数
+num_layers = 2
+# dropout 的大小
+dropout = 0.2
+# 在没有提前停止的情况下，整个训练最多被悬链的最大次数
+max_epochs = 128
+
+# 是否将训练过的模型参数进行保存
+save_model = true
+# 保存模型参数的位置前缀
+save_prefix = "./"
+
+# 是否使用 Weights and Biases 监控这个训练过程
+track = false
+# wandb 的项目名
+wandb_project_name = "Myriad"

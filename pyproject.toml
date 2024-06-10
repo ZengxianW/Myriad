@@ -1,9 +1,8 @@
 [project]
 name = "myriad"
 version = "0.1.0"
-description = "Add your description here"
+description = "一个金融股票预测助手"
 dependencies = [
-    "torch==2.3.1+cu121",
     "numpy>=1.26.4",
     "tqdm>=4.66.4",
     "baostock>=0.8.9",
@@ -12,6 +11,9 @@ dependencies = [
     "lightning[extra]>=2.2.5",
     "wandb>=0.17.1",
     "tensorboard>=2.17.0",
+    "flet>=0.22.1",
+    "torch==2.3.1+cu121",
+    "python-dotenv>=1.0.1",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
@@ -27,7 +29,6 @@ build-backend = "hatchling.build"
 [tool.rye]
 managed = true
 dev-dependencies = [
-    "torchvision==0.18.1+cu121",
 ]
 
 [tool.hatch.metadata]
