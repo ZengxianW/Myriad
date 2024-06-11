@@ -17,6 +17,24 @@ from tkinter import messagebox
 from chinese_calendar import is_workday
 
 
+def get_pervious_work_day(day: datetime):
+    """获取上一个工作日
+
+    Args:
+        day: 需要判断的日期
+
+    Returns:
+
+    """
+
+    day = day - datetime.timedelta(days=1)
+    # 如果前一天是工作日，则直接返回
+    if is_workday(day):
+        return day
+    # 否则再判断前一天的前一天
+    return get_pervious_work_day(day)
+
+
 def get_data():
     efdf = ef.stock.get_realtime_quotes()
 
@@ -24,12 +42,14 @@ def get_data():
 
     # 股市开盘时间 9:30，如果超过 9:30，则判断它前一天更新，否则判断今天更新
     # 这一步的目的是去掉已经退市的无用股票
-    if datetime.time(9, 30) >= now:
-        today = datetime.date.today() + datetime.timedelta(days=1)
-        return efdf[efdf["最新交易日"] == str(today)]
-    else:
+    if datetime.time(9, 30) > now:
         today = datetime.date.today()
-        return efdf[efdf["最新交易日"] == str(today)]
+        workday = get_pervious_work_day(today)
+        return efdf[efdf["最新交易日"] == str(workday)]
+    else:
+        today = datetime.date.today() + datetime.timedelta(days=1)
+        workday = get_pervious_work_day(today)
+        return efdf[efdf["最新交易日"] == str(workday)]
 
 
 class SearchFrame(tk.Frame):
@@ -78,7 +98,7 @@ class SearchFrame(tk.Frame):
         Returns:
 
         """
-
+        # print(self.__efdf)
         # 对展示表格组件填充数据
         for _x in self.__efdf:
             self.__tree_view.heading(_x, text=_x)
@@ -94,23 +114,6 @@ class SearchFrame(tk.Frame):
         """
         button = tk.Button(self, text='保存数据')
         return button
-
-    def __get_pervious_work_day(self, day: datetime):
-        """获取上一个工作日
-
-        Args:
-            day: 需要判断的日期
-
-        Returns:
-
-        """
-
-        day = day - datetime.timedelta(days=1)
-        # 如果前一天是工作日，则直接返回
-        if is_workday(day):
-            return day
-        # 否则再判断前一天的前一天
-        return self.__get_pervious_work_day(day)
 
     def __to_csv(self):
         """将数据保存到 `csv` 文件中
