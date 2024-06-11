@@ -24,11 +24,13 @@ dropout = 0.2
 # 在没有提前停止的情况下，整个训练最多被悬链的最大次数
 max_epochs = 128
 
+[save_model]
 # 是否将训练过的模型参数进行保存
 save_model = true
 # 保存模型参数的位置前缀
 save_prefix = "./"
 
+[wandb]
 # 是否使用 Weights and Biases 监控这个训练过程
 track = false
 # wandb 的项目名
