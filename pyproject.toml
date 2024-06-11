@@ -13,6 +13,7 @@ dependencies = [
     "torch==2.3.1+cu121",
     "lightning[extra]>=2.2.5",
     "chinese_calendar>=1.9.1",
+    "openai>=1.33.0",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"

@@ -35,3 +35,7 @@ save_prefix = "./"
 track = false
 # wandb 的项目名
 wandb_project_name = "Myriad"
+
+[openai]
+# 使用 ChatGPT 必须要使用的 API Key
+api-key = ""

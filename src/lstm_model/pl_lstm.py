@@ -350,7 +350,6 @@ if __name__ == '__main__':
 
     # `distutils.util.strtobool` 在 python3.12 中被迫废弃，这里直接借助它的代码，因为
     # `argparse` 库添加参数的类型不能直接设置为 `type=bool`，而是需要用 `type=lambda x: bool(strtobool(x))`
-    print("ghe")
 
     def strtobool(val: str):
         """Convert a string representation of truth to true (1) or false (0).
