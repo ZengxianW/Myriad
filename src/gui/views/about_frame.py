@@ -23,3 +23,7 @@ class AboutFrame(tk.Frame):
         tk.Label(self, text="专业：金融学").pack()
         tk.Label(self,
                  text="关于作品：Myriad，你的金融助手，能够帮助你预测明天的股价，也能使用 ChatGPT 作为你的金融导师").pack()
+
+
+if __name__ == '__main__':
+    pass

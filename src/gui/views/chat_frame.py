@@ -17,3 +17,6 @@ class ChatFrame(tk.Frame):
     def __init__(self, _root):
         # 执行父类的构造函数，使得我们能够调用父类的属性。
         super().__init__(_root)
+
+if __name__ == '__main__':
+    pass

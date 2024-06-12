@@ -17,7 +17,7 @@ from torch.utils.data import DataLoader, TensorDataset
 from sklearn.model_selection import train_test_split
 from typing import Any
 
-from lstm_module import LstmModule
+from lstm_model import LstmModule
 
 
 class LitAutoLstm(pl.LightningModule):
@@ -371,7 +371,7 @@ if __name__ == '__main__':
     # 训练数据存放的位置（训练数据使用 `csv` 文件格式进行存储的）
     train_data_path = f"./data/{index_code}.csv"
     # 测试情况，在测试数据中，使用 `debug_num` 条数据进行检验测试
-    debug_num = 500
+    # debug_num = 500
     # 要作为特征（feature）的列，我们这里使用 `open`, `close`, `low`, `high`, `volume`, `money`, `change` 这些数据
     # 来进行预测分析，分别为 `开盘价`，`闭盘价`，`当日最低`，`当日最高`，`成交量`，`成交金额`，`变化`。也可以用 list 如
     # [2,4,6,8] 来进行设置，只使用其中的一部分特征值

@@ -30,7 +30,7 @@ class MainPage:
         self.__root.title("Myriad v0.1.0")
 
         self.__search_frame = SearchFrame(self.__root)
-        self.__pred_frame = PredFrame(self.__root)
+        self.__pred_frame = PredFrame(self.__root, self.__toml_path)
         self.__chat_frame = ChatFrame(self.__root)
         self.__about_frame = AboutFrame(self.__root)
         self.__create_menubar()

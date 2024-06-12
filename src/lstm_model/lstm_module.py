@@ -20,7 +20,7 @@ class LstmModule(nn.Module):
 
     def __init__(self, _input_size: int, _hidden_size: int, _output_size: int,
                  _num_layers: int = 1, _dropout: float = 0., _batch_first: bool = True):
-        r"""`__init__` 是类（class）的构造方法，在使用类创建对象之后被执行，
+        r"""`__init__.py` 是类（class）的构造方法，在使用类创建对象之后被执行，
         用于给新创建的对象初始化属性。所有参数可以参考 Pytorch 的 LSTM 类实现，
         ref: https://pytorch.org/docs/stable/generated/torch.nn.LSTM.html
 

@@ -6,6 +6,7 @@
 # @File    : src/lstm_model/__init__.py
 # @Software: VSCode
 
+from lstm_model.lstm_module import LstmModule
 from lstm_model.pl_lstm import LitAutoLstm
 
 __all__ = ["LstmModule", "LitAutoLstm"]

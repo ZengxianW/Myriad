@@ -3,7 +3,7 @@
 # @Time    : 2024/6/11 3:56
 # @Author  : Zengxian Wang
 # @Email   : zengxian822.wang@gmail.com
-# @File    : src/gui/views/__init__.py.py
+# @File    : src/gui/views/__init__.py
 # @Software: VS Code
 
 from gui.views.about_frame import AboutFrame

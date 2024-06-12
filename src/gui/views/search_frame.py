@@ -123,3 +123,7 @@ class SearchFrame(tk.Frame):
         """
         self.__efdf.to_csv("./ef_data.csv", index=False)
         messagebox.showinfo(title="Myriad v0.1.0", message="保存成功")
+
+
+if __name__ == '__main__':
+    pass
