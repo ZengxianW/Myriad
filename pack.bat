@@ -1,1 +1,3 @@
-Pyinstaller -F -w -i .\src\myriad\assets\icon.png .\src\myriad\main.py
+.venv\Scripts\activate
+
+Pyinstaller -F -i .\src\myriad\assets\icon.png .\src\myriad\main.py

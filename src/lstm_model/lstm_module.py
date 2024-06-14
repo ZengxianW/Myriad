@@ -40,7 +40,8 @@ class LstmModule(nn.Module):
         super(LstmModule, self).__init__()
         self.__lstm = nn.LSTM(input_size=_input_size, hidden_size=_hidden_size,
                               num_layers=_num_layers, batch_first=_batch_first, dropout=_dropout)
-        self.__linear = nn.Linear(in_features=_hidden_size, out_features=_output_size)
+        self.__linear = nn.Linear(
+            in_features=_hidden_size, out_features=_output_size)
 
     def forward(self, x: Tensor, hx: Optional[Tuple[Tensor, Tensor]] = None) \
             -> Tuple[Tensor, Tuple[Tensor, Tensor]]:
