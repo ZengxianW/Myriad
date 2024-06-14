@@ -1,0 +1,1 @@
+Pyinstaller -F -w -i .\src\myriad\assets\icon.png .\src\myriad\main.py

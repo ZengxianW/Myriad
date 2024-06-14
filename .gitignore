@@ -1,5 +1,6 @@
 # project specify ignore files or directories
 res/
+dist/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

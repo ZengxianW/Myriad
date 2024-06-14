@@ -6,8 +6,8 @@
 # @File    : src/gui/__init__.py.py
 # @Software: VS Code
 
-from load_toml import LoadToml
-from main_page import MainPage
+from gui.load_toml import LoadToml
+from gui.main_page import MainPage
 
 __all__ = ["LoadToml", "MainPage"]
 
