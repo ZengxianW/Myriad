@@ -295,7 +295,22 @@ if __name__ == '__main__':
 
     from lightning.pytorch.loggers import TensorBoardLogger
 
-    from hyper_parameters import cfg
+    cfg = {
+        'parameters': {
+            'seed': 1, 'train_data_rate': 0.95, 'valid_data_rate': 0.15, 'predict_day': 1, 'time_step': 50,
+            'debug_num': 500, 'learning_rate': 0.0001, 'batch_size': 128, 'hidden_size': 128, 'num_layers': 2,
+            'dropout': 0.2, 'max_epochs': 128
+        },
+        'save_model': {
+            'save_model': True, 'save_prefix': './'
+        },
+        'wandb': {
+            'track': False, 'wandb_project_name': 'Myriad'
+        },
+        'setting': {
+            'multi_process': True, 'num_process': 8
+        }
+    }
 
 
     # def parse_args():
@@ -414,7 +429,7 @@ if __name__ == '__main__':
             entity=args["wandb"]["wandb_entity"],
             save_dir=f"{args["save_model"]["save_prefix"]}/res/stock-lstm/{index_code}",
             sync_tensorboard=True,
-            config=vars(args),
+            config=args,
             name=run_name
         )
 

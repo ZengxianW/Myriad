@@ -10,7 +10,7 @@ import tkinter as tk
 
 from tkinter import filedialog
 
-from main_page import MainPage
+from gui.main_page import MainPage
 
 
 class LoadToml:

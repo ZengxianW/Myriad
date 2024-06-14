@@ -17,4 +17,4 @@ __description__ = "`tkinter` 中的一些 `Frame` 的包装实现。"
 
 __author__ = "Zengxian Wang <zengxian822.wang@gmail.com>"
 __version__ = "0.1"
-__date__ = "11th June 2024"
+__date__ = "11st June 2024"

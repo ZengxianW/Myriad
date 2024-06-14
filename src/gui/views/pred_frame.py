@@ -147,10 +147,10 @@ class PredFrame(tk.Frame):
 
             self.__wandb_logger = WandbLogger(
                 project=self.__args["wandb"]["wandb_project_name"],
-                entity=self.__args["wandb"]["wandb_entity"],
+                # entity=self.__args["wandb"]["wandb_entity"],
                 save_dir=f"{self.__args["save_model"]["save_prefix"]}/res/stock-lstm/{self.__index_code}",
                 sync_tensorboard=True,
-                config=vars(self.__args),
+                config=self.__args,
                 name=run_name
             )
 
@@ -190,6 +190,7 @@ class PredFrame(tk.Frame):
                 messagebox.showerror(title="Myriad v0.1.0", message="预测失败，请更换其他股票预测")
             else:
                 # 预测成功就打印价格，保留 3 位小数
+                messagebox.showinfo(title="Myriad v0.1.0", message="预测成功")
                 self.__status.set("预测成功")
                 self.__low_price.set(f"预测明日最低价格：{self.__predict_data[-1][0]:.3f}")
                 self.__high_price.set(f"预测明日最高价格：{self.__predict_data[-1][1]:.3f}")
