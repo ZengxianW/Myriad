@@ -31,7 +31,7 @@ class LitAutoLstm(pl.LightningModule):
 
         Args:
             _lstm: 传入的 LSTM 模型网络类
-            _args: 传入的 配置定义，是  `argparse.Namespace` 类型
+            _args: 传入的 配置定义，是  `dict` 类型
             _df_data: 传入的数据，包括训练集、验证集和测试集，默认为 `pd.DataFrame` 类型
             _feature_columns: 数据的特征列，`list` 类型，类似 [1, 2, 3] 的形式
             _label_columns: 要预测的数据所在的列，按原数据的第一列为 0 开始计算
@@ -59,7 +59,8 @@ class LitAutoLstm(pl.LightningModule):
         # 数据的总量
         self.__data_num = self.__data.shape[0]
         # 作为训练数据集的数据的数量
-        self.__train_num = int(self.__data_num * self.__args["parameters"]["train_data_rate"])
+        self.__train_num = int(
+            self.__data_num * self.__args["parameters"]["train_data_rate"])
 
         # 我们需要找到我们所预测的这两个数据列，在总共的数据列中的序号，例如 [`open`, `close`, `low`, `high`, `volume`, `money`,
         # `change`] 这个列表，我们预测的数据 [`low`, `high`] 的序号为 [2, 3]，而他俩在原本的原始数据中的序号为 [4, 5]
@@ -72,10 +73,10 @@ class LitAutoLstm(pl.LightningModule):
         self.__feature_data = self.__norm_data[:self.__train_num]
         # 将后续几天的数据作为我们需要预测的内容，也就是 `label`，这里就是将之前的 `norm_data` 的数据往后移一天
         self.__label_data = self.__norm_data.iloc[
-                            self.__args["parameters"]["predict_day"]:
-                            self.__args["parameters"]["predict_day"] + self.__train_num,
-                            self.label_in_feature_index
-                            ]
+            self.__args["parameters"]["predict_day"]:
+            self.__args["parameters"]["predict_day"] + self.__train_num,
+            self.label_in_feature_index
+        ]
 
         # 设置连续训练，在该模式下，每 `time_step` 行数据会作为一个样本，两个样本之间错开 `time_step` 行，
         # 比如：以 `time_step=20` 为例，最终实现结果为： 1-20 行，21-40行 ······ 一直到数据末尾，然后又是
@@ -86,8 +87,8 @@ class LitAutoLstm(pl.LightningModule):
         # `_train_x` 是特征数据，形状 (`data_num`, `time_step`, 7)，7 是一共有 7 个需要考虑的变量
         _train_x = [
             self.__feature_data[
-            start_index + i * self.__args["parameters"]["time_step"]: start_index + (i + 1) *
-                                                                      self.__args["parameters"]["time_step"]]
+                start_index + i * self.__args["parameters"]["time_step"]: start_index + (i + 1) *
+                self.__args["parameters"]["time_step"]]
             for start_index in range(self.__args["parameters"]["time_step"])
             for i in range((self.__train_num - start_index) // self.__args["parameters"]["time_step"])
         ]
@@ -95,8 +96,8 @@ class LitAutoLstm(pl.LightningModule):
         # 天数据
         _train_y = [
             self.__label_data[
-            start_index + i * self.__args["parameters"]["time_step"]: start_index + (i + 1) *
-                                                                      self.__args["parameters"]["time_step"]]
+                start_index + i * self.__args["parameters"]["time_step"]: start_index + (i + 1) *
+                self.__args["parameters"]["time_step"]]
             for start_index in range(self.__args["parameters"]["time_step"])
             for i in range((self.__train_num - start_index) // self.__args["parameters"]["time_step"])
         ]
@@ -109,8 +110,10 @@ class LitAutoLstm(pl.LightningModule):
 
         # 使用 `torch` 的 `DataLoader()` 方法，把数据装载，但首先需要转换成 `np.ndarray` 格式，之后在在类内函数
         # `train_dataloader()`，`val_dataloader()` 中使用 `DataLoader` 方法加载。
-        self.__train_x, self.__train_y = torch.from_numpy(_train_x).float(), torch.from_numpy(_train_y).float()
-        self.__valid_x, self.__valid_y = torch.from_numpy(_valid_x).float(), torch.from_numpy(_valid_y).float()
+        self.__train_x, self.__train_y = torch.from_numpy(
+            _train_x).float(), torch.from_numpy(_train_y).float()
+        self.__valid_x, self.__valid_y = torch.from_numpy(
+            _valid_x).float(), torch.from_numpy(_valid_y).float()
 
         self.__start_num_in_test = None
 
@@ -215,7 +218,8 @@ class LitAutoLstm(pl.LightningModule):
         """
         _feature_data = self.__norm_data[self.__train_num - 1:-1]
         # 防止 `time_step` 大于测试集数量
-        _sample_interval = min(_feature_data.shape[0], self.__args["parameters"]["time_step"])
+        _sample_interval = min(
+            _feature_data.shape[0], self.__args["parameters"]["time_step"])
         # 这些天的数据不够一个 `sample_interval`
         self.__start_num_in_test = _feature_data.shape[0] % _sample_interval
         _time_step_size = _feature_data.shape[0] // _sample_interval
@@ -224,14 +228,14 @@ class LitAutoLstm(pl.LightningModule):
         # 比如：1-20 行，21-40 行 ······ 到数据末尾。
         _test_x = torch.from_numpy(np.array([
             _feature_data[
-            self.__start_num_in_test + i * _sample_interval - 1:
-            self.__start_num_in_test + (i + 1) * _sample_interval - 1
+                self.__start_num_in_test + i * _sample_interval - 1:
+                self.__start_num_in_test + (i + 1) * _sample_interval - 1
             ] for i in range(_time_step_size)
         ])).float()
         _test_y = torch.from_numpy(np.array([
             _feature_data[
-            self.__start_num_in_test + i * _sample_interval:
-            self.__start_num_in_test + (i + 1) * _sample_interval
+                self.__start_num_in_test + i * _sample_interval:
+                self.__start_num_in_test + (i + 1) * _sample_interval
             ] for i in range(_time_step_size)
         ])).float()
         _test_loader = DataLoader(
@@ -248,7 +252,8 @@ class LitAutoLstm(pl.LightningModule):
         """
         _feature_data = self.__norm_data[self.__train_num - 1:-1]
         # 防止 `time_step` 大于测试集数量
-        _sample_interval = min(_feature_data.shape[0], self.__args["parameters"]["time_step"])
+        _sample_interval = min(
+            _feature_data.shape[0], self.__args["parameters"]["time_step"])
         # 这些天的数据不够一个 `sample_interval`
         self.__start_num_in_test = _feature_data.shape[0] % _sample_interval
         _time_step_size = _feature_data.shape[0] // _sample_interval
@@ -257,7 +262,7 @@ class LitAutoLstm(pl.LightningModule):
         # 比如：1-20 行，21-40 行 ······ 到数据末尾。
         _pred_x = torch.from_numpy(np.array([
             _feature_data[
-            self.__start_num_in_test + i * _sample_interval: self.__start_num_in_test + (i + 1) * _sample_interval
+                self.__start_num_in_test + i * _sample_interval: self.__start_num_in_test + (i + 1) * _sample_interval
             ] for i in range(_time_step_size)
         ])).float()
 
@@ -305,13 +310,9 @@ if __name__ == '__main__':
             'save_model': True, 'save_prefix': './'
         },
         'wandb': {
-            'track': False, 'wandb_project_name': 'Myriad'
-        },
-        'setting': {
-            'multi_process': True, 'num_process': 8
+            'track': True, 'wandb_project_name': 'Myriad', "wandb_entity": None
         }
     }
-
 
     # def parse_args():
     #     """使用 `argparse` 库设置需要用到的超参数。
@@ -380,7 +381,6 @@ if __name__ == '__main__':
         else:
             raise ValueError("invalid truth value %r" % (val,))
 
-
     # 训练的股票代码
     index_code = "stock_data"
     # 训练数据存放的位置（训练数据使用 `csv` 文件格式进行存储的）
@@ -415,8 +415,10 @@ if __name__ == '__main__':
     torch.cuda.manual_seed_all(args["parameters"]["seed"])
     torch.backends.cudnn.deterministic = True
 
+    # 设置使用 `TensorBoard` 的日志保存器
     tb_logger = TensorBoardLogger(
-        save_dir=f"{args["save_model"]["save_prefix"]}/res/stock-lstm/lightning_logs/{index_code}",
+        save_dir=f"{args["save_model"]["save_prefix"]
+                    }/res/stock-lstm/lightning_logs/{index_code}",
         name="stock-lstm", default_hp_metric=False
     )
 
@@ -424,10 +426,12 @@ if __name__ == '__main__':
     if args["wandb"]["track"]:
         from lightning.pytorch.loggers import WandbLogger
 
+        # 设置使用 `wandb` 的日志保存器
         wandb_logger = WandbLogger(
             project=args["wandb"]["wandb_project_name"],
             entity=args["wandb"]["wandb_entity"],
-            save_dir=f"{args["save_model"]["save_prefix"]}/res/stock-lstm/{index_code}",
+            save_dir=f"{args["save_model"]["save_prefix"]
+                        }/res/stock-lstm/{index_code}",
             sync_tensorboard=True,
             config=args,
             name=run_name
@@ -435,13 +439,15 @@ if __name__ == '__main__':
 
         trainer = pl.Trainer(
             max_epochs=args["parameters"]["max_epochs"],
-            default_root_dir=f"{args["save_model"]["save_prefix"]}/res/stock-lstm/{index_code}",
+            default_root_dir=f"{
+                args["save_model"]["save_prefix"]}/res/stock-lstm/{index_code}",
             logger=[tb_logger, wandb_logger]
         )
     else:
         trainer = pl.Trainer(
             max_epochs=args["parameters"]["max_epochs"],
-            default_root_dir=f"{args["save_model"]["save_prefix"]}/res/stock-lstm/{index_code}",
+            default_root_dir=f"{
+                args["save_model"]["save_prefix"]}/res/stock-lstm/{index_code}",
             logger=[tb_logger]
         )
 
@@ -466,6 +472,6 @@ if __name__ == '__main__':
 
     # 通过保存的均值和方差还原数据
     predict_data = pred_result * auto_lstm.std[auto_lstm.label_in_feature_index] + \
-                   auto_lstm.mean[auto_lstm.label_in_feature_index]
+        auto_lstm.mean[auto_lstm.label_in_feature_index]
 
     print(predict_data)
