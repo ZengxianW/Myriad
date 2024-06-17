@@ -53,7 +53,7 @@ def get_data():
 
 
 class SearchFrame(tk.Frame):
-    """参数设置界面的包装实现
+    """股票查找保存界面的包装实现
 
     """
 
@@ -104,7 +104,8 @@ class SearchFrame(tk.Frame):
             self.__tree_view.heading(_x, text=_x)
             self.__tree_view.column(_x, width=100)
         for _i in range(len(self.__efdf)):
-            self.__tree_view.insert('', _i, values=self.__efdf.iloc[_i, :].tolist())
+            self.__tree_view.insert(
+                '', _i, values=self.__efdf.iloc[_i, :].tolist())
 
     def __create_button(self):
         """创造按钮
