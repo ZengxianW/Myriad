@@ -122,7 +122,9 @@ class SearchFrame(tk.Frame):
         Returns:
 
         """
-        self.__efdf.to_csv("./ef_data.csv", index=False)
+        if not os.path.exists("./res"):
+            os.makedirs("./res")
+        self.__efdf.to_csv("./res/ef_data.csv", index=False)
         messagebox.showinfo(title="Myriad v0.1.0", message="保存成功")
 
 
