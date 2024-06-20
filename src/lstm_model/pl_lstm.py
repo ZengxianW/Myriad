@@ -6,6 +6,11 @@
 # @File    : src/lstm_model/pl_lstm.py
 # @Software: VS Code
 
+
+# 该文件定义了一个基于 PyTorch Lightning 的 LSTM 模型，并实现了训练、验证、测试和预测的流程。
+# 提供了数据预处理、模型初始化、优化器配置和日志记录功能。
+# 包含主程序，用于加载数据、设置参数、训练模型和进行预测。
+
 import torch
 
 import pandas as pd
@@ -13,7 +18,9 @@ import numpy as np
 
 import lightning.pytorch as pl
 
+# 用于数据加载
 from torch.utils.data import DataLoader, TensorDataset
+# 用于划分训练和验证数据集
 from sklearn.model_selection import train_test_split
 from typing import Any
 
@@ -117,6 +124,7 @@ class LitAutoLstm(pl.LightningModule):
 
         self.__start_num_in_test = None
 
+# 定义训练步骤，计算训练集的损失值。
     def training_step(self, batch, batch_idx: int) -> torch.Tensor:
         """ `training_step` 定义整个训练过程中每一次循环所需要做的事情，并且返回每一步的 loss 值
 
@@ -137,6 +145,7 @@ class LitAutoLstm(pl.LightningModule):
         self.log_dict({"train_loss": loss.item()})
         return loss
 
+# 定义验证步骤，计算验证集的损失值。
     def validation_step(self, batch, batch_idx: int) -> None:
         """ `validation_step` 定义整个验证过程中每一次循环所需要做的事情，并且返回每一步的 loss 值
 
@@ -156,6 +165,7 @@ class LitAutoLstm(pl.LightningModule):
         # 使用 wandb 或者 tensorboard
         self.log_dict({"val_loss": loss.item()})
 
+# 定义测试步骤，计算测试集的损失值
     def test_step(self, batch, batch_idx: int) -> None:
         """ `test_step` 定义整个测试过程中每一次循环所需要做的事情，并且返回每一步的 loss 值
 
@@ -185,6 +195,7 @@ class LitAutoLstm(pl.LightningModule):
         optimizer = torch.optim.Adam(self.parameters(), lr=self.__args["parameters"]["learning_rate"],
                                      eps=0.01 / self.__args["parameters"]["batch_size"])
         return optimizer
+
 
     def train_dataloader(self) -> DataLoader:
         """使用 `train_dataloader()` 方法生成训练数据加载器
@@ -275,6 +286,7 @@ class LitAutoLstm(pl.LightningModule):
         )
         return _pred_loader
 
+# 定义预测步骤，返回预测结果
     def predict_step(self, batch, batch_idx: int) -> Any:
         """模型进行预测的时候使用的步骤
 

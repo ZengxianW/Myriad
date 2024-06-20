@@ -21,7 +21,7 @@ hidden_size = 128
 num_layers = 2
 # dropout 的大小
 dropout = 0.2
-# 在没有提前停止的情况下，整个训练最多被悬链的最大次数
+# 在没有提前停止的情况下，整个训练最多被训练的最大次数
 max_epochs = 16
 
 [save_model]
@@ -38,7 +38,7 @@ wandb_project_name = "Myriad"
 
 [openai]
 # 使用 ChatGPT 必须要使用的 API Key，注意，此处必须更改
-api_key = "fk227596-rjY3RlrWc7otDQ2QkqW8a37EnUf7qS0N"
+api_key = ""
 # 使用 ChatGPT 访问的 API 地址（这里使用的 API2D，ChatGPT 正版的没金额）
 url = "https://oa.api2d.net"
 # 使用的模型（只有gpt-3.5-turbo"，其他没权限）

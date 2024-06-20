@@ -6,6 +6,8 @@
 # @File    : src/gui/about_frame.py
 # @Software: VS Code
 
+
+# 导入 tkinter 模块，并命名为 tk，用于创建图形用户界面
 import tkinter as tk
 
 
@@ -14,6 +16,7 @@ class AboutFrame(tk.Frame):
 
     """
 
+# 定义了初始化方法 __init__，并调用父类的构造函数 super().__init__(_root)，将根窗口 _root 传递给父类。
     def __init__(self, _root):
         # 执行父类的构造函数，使得我们能够调用父类的属性。
         super().__init__(_root)

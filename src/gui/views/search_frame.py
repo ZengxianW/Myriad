@@ -6,7 +6,13 @@
 # @File    : src/gui/views/search_frame.py
 # @Software: VS Code
 
+# 通过 efinance 模块获取实时股票数据。
+# 使用 tkinter 创建图形用户界面，包含数据表格和滚动条。
+# 将股票数据展示在 Treeview 组件中。
+# 提供保存按钮，将数据保存为 CSV 文件。
+
 import datetime
+import os
 
 import tkinter as tk
 

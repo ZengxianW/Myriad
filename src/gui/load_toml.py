@@ -6,10 +6,14 @@
 # @File    : src/gui/load_toml.py
 # @Software: VS Code
 
+
+# 该文件定义了一个用于上传 TOML 文件的图形用户界面。
+# 用户可以通过该界面选择并上传一个 TOML 文件，然后加载主页面显示该文件的内容。
+
 import tkinter as tk
-
+# 从 tkinter 模块导入 filedialog，用于文件对话框操作
 from tkinter import filedialog
-
+# 从 gui.main_page 模块导入 MainPage 类，用于展示主页面
 from gui.main_page import MainPage
 
 

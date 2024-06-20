@@ -6,15 +6,24 @@
 # @File    : src/gui/pred_frame.py
 # @Software: VS Code
 
+# 这个 pred_frame.py 文件实现了一个基于 tkinter 的图形用户界面，用于进行股票价格预测。
+# 用户可以通过界面输入股票代码并选择股票类型，系统会获取历史数据，使用 LSTM 模型进行训练并预测股票的最低价和最高价，并将结果显示在界面上。
+
+# 导入 toml 模块，用于处理 TOML 配置文件
 import toml
+# 导入 torch 模块，用于深度学习模型的构建和训练
 import torch
+# 导入时间和随机数模块，用于设置随机种子和记录时间
 import time
 import random
 
+# 导入 baostock 模块，用于获取股票数据
 import baostock as bs
+# 导入 tkinter 模块及其子模块，用于创建图形用户界面
 import tkinter as tk
 import pandas as pd
 import numpy as np
+# 导入 lightning 模块及其日志记录器，用于训练过程的记录和可视化
 import lightning as pl
 
 from tkinter import ttk
@@ -23,18 +32,20 @@ from lightning.pytorch.loggers import TensorBoardLogger
 
 from lstm_model import LstmModule, LitAutoLstm
 
-
+# 定义了一个继承自 tk.Frame 的类 PredFrame，用于创建股票价格预测的图形界面
 class PredFrame(tk.Frame):
     """预测设置界面的包装实现
 
     """
 
+# 构造函数初始化预测界面，接收根窗口 _root 和 TOML 文件路径 _toml_path 作为参数
     def __init__(self, _root: tk.Tk, _toml_path: str = "./config.toml"):
         # 执行父类的构造函数，使得我们能够调用父类的属性。
         super().__init__(_root)
         self.__toml_path = _toml_path
         # 设置存储股票代码的变量
         self.__index_code_holder = tk.StringVar()
+        # 用于显示预测状态、最低价和最高价的 StringVar 变量
         self.__status = tk.StringVar()
         self.__low_price = tk.StringVar()
         self.__high_price = tk.StringVar()
@@ -42,6 +53,7 @@ class PredFrame(tk.Frame):
 
     def __create_page(self):
         # 设置框
+        # 创建标签，提示用户输入股票代码
         tk.Label(self, text="所预测股票的代码（例如 000001 ）").grid(row=0, column=0)
         tk.Entry(self, textvariable=self.__index_code_holder).grid(row=0, column=1)
 

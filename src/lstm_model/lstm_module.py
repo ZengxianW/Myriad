@@ -7,17 +7,23 @@
 # @Software: VSCode
 
 
+# 定义了一个使用 PyTorch 实现的 LSTM 网络模型，并包含一个线性层。提供了初始化和前向传播的方法，并包含测试代码来验证模型的功能。
+
+# 导入 PyTorch 的神经网络模块。
 import torch.nn as nn
 
+# 从 PyTorch 导入 Tensor 类型。
 from torch import Tensor
+# 从 typing 模块导入 Tuple 和 Optional 类型提示
 from typing import Tuple, Optional
 
-
+# 定义了一个继承自 nn.Module 的类 LstmModule，用于创建 LSTM 网络模型。
 class LstmModule(nn.Module):
     r"""使用人工智能库 PyTorch 构造的长短时记忆（LSTM）网络模型
 
     """
 
+# 构造函数，初始化 LSTM 模型的各项参数。
     def __init__(self, _input_size: int, _hidden_size: int, _output_size: int,
                  _num_layers: int = 1, _dropout: float = 0., _batch_first: bool = True):
         r"""`__init__.py` 是类（class）的构造方法，在使用类创建对象之后被执行，
@@ -38,11 +44,14 @@ class LstmModule(nn.Module):
                 的形式提供，而非 `(seq, batch, feature)` 形式
         """
         super(LstmModule, self).__init__()
+        # 创建 LSTM 层。
         self.__lstm = nn.LSTM(input_size=_input_size, hidden_size=_hidden_size,
                               num_layers=_num_layers, batch_first=_batch_first, dropout=_dropout)
+        # 创建线性层。
         self.__linear = nn.Linear(
             in_features=_hidden_size, out_features=_output_size)
 
+# 定义前向传播的方法。
     def forward(self, x: Tensor, hx: Optional[Tuple[Tensor, Tensor]] = None) \
             -> Tuple[Tensor, Tuple[Tensor, Tensor]]:
         """Pytorch 框架构造函数中必须实现的前向传播放方式的实现函数
@@ -61,8 +70,13 @@ class LstmModule(nn.Module):
             hx: 隐藏层数据，以 (`hn`, `cn`) 的状态输出，`hn` 是最后一个时间步的隐藏状态，形状与 `h0`
             相同。 `cn` 是最后一个时间步的细胞状态，形状与 `c0` 相同。
         """
+        # 将输入数据传递给 LSTM 层，得到输出和隐藏状态。
         lstm_out, hx = self.__lstm(x, hx)
+        # 将 LSTM 的输出传递给线性层。
         linear_out = self.__linear(lstm_out)
+        
+        # 返回线性层的输出和隐藏状态。
+
         return linear_out, hx
 
 
