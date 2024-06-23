@@ -38,7 +38,7 @@ wandb_project_name = "Myriad"
 
 [openai]
 # 使用 ChatGPT 必须要使用的 API Key，注意，此处必须更改
-api_key = ""
+api_key = "fk227596-************************"
 # 使用 ChatGPT 访问的 API 地址（这里使用的 API2D，ChatGPT 正版的没金额）
 url = "https://oa.api2d.net"
 # 使用的模型（只有gpt-3.5-turbo"，其他没权限）

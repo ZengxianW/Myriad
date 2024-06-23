@@ -8,7 +8,8 @@
 
 
 # 这个 chat_frame.py 文件实现了一个基于 tkinter 的图形用户界面，用于与 ChatGPT 进行聊天。
-# 用户可以通过界面输入消息并获取 ChatGPT 的回复。整个系统通过配置文件加载必要参数，使用 ChatGPTSession 进行会话，并显示在图形界面中。
+# 用户可以通过界面输入消息并获取 ChatGPT 的回复。
+# 整个系统通过配置文件加载必要参数，使用 ChatGPTSession 进行会话，并显示在图形界面中。
 
 
 # 导入 toml 模块，用于处理 TOML 配置文件

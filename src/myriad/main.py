@@ -12,7 +12,7 @@ from gui import LoadToml
 
 
 def main() -> int:
-    print("hello")
+    # print("hello")
     # 创建 `tkinter` 中的 `TK` 类，以实现窗口
     root = tk.Tk()
     LoadToml(_root=root)
